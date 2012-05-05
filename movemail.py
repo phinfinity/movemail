@@ -41,18 +41,13 @@ def get_input():
 def move_messages():
     print "Getting List of Messages in Inbox"
     message_list=scon.search(None,'ALL')[1][0].split()
-    print "%d Messages in INBOX to be moved"%len(message_list)
     print "Getting Details of Messages in Inbox"
     dat=scon.fetch(','.join(message_list),"(BODY[HEADER.FIELDS (subject)])")[1]
+    print "%d Messages in INBOX to be moved"%len(message_list)
     subjects={}
     for i in dat:
         if type(i)==tuple:
             subjects[i[0].split()[0]]=i[1].strip()
-    dat=scon.fetch(','.join(message_list),"(BODY[HEADER.FIELDS (date)])")[1]
-    dates={}
-    for i in dat:
-        if type(i)==tuple:
-            dates[i[0].split()[0]]=i[1][5:].strip()
     cnt=0;
     for i in message_list:
         cnt+=1
@@ -60,8 +55,8 @@ def move_messages():
         header_dat=scon.fetch(i,"(BODY[HEADER])")[1][0][1]
         body_dat=scon.fetch(i,"(BODY[TEXT])")[1][0][1]
         print "Appending to %s"%(dest_host)
+        dcon.append('INBOX',None,None,header_dat+body_dat)
         #dcon.append('INBOX','',imaplib.Time2Internaldate(time.time()),header_dat+body_dat)
-        dcon.append('INBOX','','',header_dat+body_dat)
         
 
 
