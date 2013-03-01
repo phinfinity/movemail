@@ -1,4 +1,7 @@
-#!/usr/bin/env  python
+#!/usr/bin/env  python2
+#Author Phinfinity <rndanish@gmail.com>
+#The script only makes a copy of the email, doesn't delete any mails
+#For README check http://github.com/phinfinity/movemail 
 
 import getpass,imaplib,time
 
